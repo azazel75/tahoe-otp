@@ -1,0 +1,22 @@
+# -*- mode: makefile; coding: utf-8 -*-
+#-*- coding: utf-8 -*-
+#:Progetto:  PassionHub -- Development makefile snippet
+#:Creato:    ven 16 ago 2013 22:55:42 CEST
+#:Autore:    Lele Gaifax <lele@metapensiero.it>
+#:Licenza:   GNU General Public License version 3 or later
+#
+
+# Launch the web server, after updating the installation and the database
+.PHONY: run
+run: buildout
+	$(MAKE) -C $(PHSDIR) $@
+
+# Launch a Python shell with the Pyramid environment loaded
+.PHONY: shell
+shell:
+	$(MAKE) -C $(PHSDIR) $@
+
+# Run unit and functional tests
+.PHONY: check
+check:
+	$(MAKE) -C $(PHSDIR) $@
