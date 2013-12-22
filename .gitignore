@@ -16,4 +16,5 @@
 /env/
 /src/pip-delete-this-directory.txt
 /var/
-/env/local/lib
+/etc/linotp.ini
+/etc/nginx.conf
