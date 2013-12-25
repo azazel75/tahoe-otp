@@ -20,9 +20,9 @@ linotpAudit.key.private = ${buildout:directory}/etc/private.pem
 linotpAudit.key.public = ${buildout:directory}/etc/public.pem
 
 #linotpAudit.sql.url = mysql://linotp2:1234@localhost/LinOTP2
-linotpAudit.file.filename = ${buildout:vardir}/audit.log
+linotpAudit.file.filename = ${buildout:vardir}/log/audit.log
 linotpAudit.file.audit_num = ${buildout:directory}/etc/audit_num
-linotpAudit.sql.url = sqlite://${buildout:vardir}/token.sqlite
+linotpAudit.sql.url = sqlite:///${buildout:vardir}/token.sqlite
 # One entry for SQL audit might take about 1K
 linotpAudit.sql.highwatermark = 10000
 linotpAudit.sql.lowwatermark = 5000
@@ -60,7 +60,7 @@ port = 5001
 [app:main]
 use = egg:LinOTP
 #sqlalchemy.url = mysql://linotp2:1234@localhost/LinOTP2
-sqlalchemy.url = sqlite://${buildout:vardir}/token.sqlite
+sqlalchemy.url = sqlite:///${buildout:vardir}/token.sqlite
 sqlalchemy.pool_recycle = 3600
 #sqlalchemy.url = postgres://user:password@localhost/otpdb
 #sqlalchemy.url = mysql://user:password@localhost/linotp2
@@ -69,10 +69,10 @@ static_files = true
 
 who.config_file = ${eggpaths:linotp}/etc/linotp2/who.ini
 who.log_level = warning
-who.log_file = ${buildout:vardir}/linotp.log
+who.log_file = ${buildout:vardir}/log/linotp.log
 
 
-cache_dir = ${buildout:vardir}/data
+cache_dir = ${buildout:vardir}/cache
 custom_templates = ${buildout:directory}/etc/custom-templates/
 #beaker.session.key = linotp
 #beaker.session.secret = somesecret
@@ -115,7 +115,7 @@ keys = file
 class = handlers.RotatingFileHandler
 # Make the logfiles 10 MB
 # and rotate 4  files
-args = ('${buildout:vardir}/linotp.log','a', 10000000, 4)
+args = ('${buildout:vardir}/log/linotp.log','a', 10000000, 4)
 level = INFO
 formatter = generic
 
