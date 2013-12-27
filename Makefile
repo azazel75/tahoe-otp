@@ -21,7 +21,6 @@ PIP_SETUP := https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 REQUIREMENTS_TIMESTAMP := $(VENVDIR)/requirements.timestamp
 WGET := wget --quiet --no-check-certificate
 
-PHSDIR := $(TOPDIR)/servers/phs
 
 # This is the default target, when no target is specified on the command line
 .PHONY: all
@@ -38,7 +37,6 @@ realclean:: clean
 # Remove anything downloadable/rebuildable
 .PHONY: distclean
 distclean:: realclean
-	$(MAKE) -C $(PHSDIR) $@
 
 
 ## virtual env rules

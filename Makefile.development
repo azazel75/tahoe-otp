@@ -9,14 +9,3 @@
 # Launch the web server, after updating the installation and the database
 .PHONY: run
 run: buildout
-	$(MAKE) -C $(PHSDIR) $@
-
-# Launch a Python shell with the Pyramid environment loaded
-.PHONY: shell
-shell:
-	$(MAKE) -C $(PHSDIR) $@
-
-# Run unit and functional tests
-.PHONY: check
-check:
-	$(MAKE) -C $(PHSDIR) $@
