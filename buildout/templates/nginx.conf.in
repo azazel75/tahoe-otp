@@ -1,10 +1,9 @@
 #user  nobody;
 worker_processes  1;
 
-#error_log  logs/error.log;
-
-#pid        logs/nginx.pid;
-
+error_log  ${buildout:vardir}/log/nginx_error.log warn;
+pid        ${buildout:vardir}/nginx.pid;
+daemon off;
 
 events {
     worker_connections  1024;
@@ -14,12 +13,11 @@ events {
 http {
     include       ${nginx:location}/conf/mime.types;
     default_type  application/octet-stream;
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
 
-    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-    #                  '$status $body_bytes_sent "$http_referer" '
-    #                  '"$http_user_agent" "$http_x_forwarded_for"';
-
-    #access_log  logs/access.log  main;
+    access_log  ${buildout:vardir}/log/access.log  main;
 
     sendfile        on;
     #tcp_nopush     on;
@@ -43,6 +41,22 @@ http {
             root   html;
         }
 
+        location / {
+            auth_request      /_auth;
+            auth_request_set $cookie $upstream_http_set_cookie;
+            proxy_pass       http://${hosts:linotp}:${ports:linotp};
+            add_header Set-Cookie $cookie;
+        }
 
+        location = /_auth {
+            internal;
+            proxy_pass http://${hosts:otpauth}:${ports:otpauth}/login;
+            proxy_pass_request_body off;
+            proxy_set_header Content-Length "";
+            proxy_set_header X-Original-Method $request_method;
+            proxy_set_header X-Original-Remote-Address $remote_address
+            proxy_set_header X-OTP-Realm "Tahoe store"
+            # proxy_set_header X-Original-URI $request_uri;
+        }
     }
 }
