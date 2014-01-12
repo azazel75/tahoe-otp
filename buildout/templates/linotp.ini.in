@@ -52,9 +52,9 @@ radius.nas_identifier = LinOTP
 [server:main]
 use = egg:Paste#http
 #host = 172.16.200.100
-host = 0.0.0.0
-#host = localhost
-port = 5001
+#host = 0.0.0.0
+host = ${hosts:linotp}
+port = ${ports:linotp}
 #ssl_pem = *
 
 [app:main]

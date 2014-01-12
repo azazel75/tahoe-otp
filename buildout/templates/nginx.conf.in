@@ -32,18 +32,10 @@ http {
     #gzip  on;
 
     server {
-        listen       80;
-        server_name  localhost;
-
-        #charset koi8-r;
+        listen       ${ports:nginx};
+        server_name  ${hosts:nginx};
 
         #access_log  logs/host.access.log  main;
-
-        location / {
-            root   html;
-            index  index.html index.htm;
-        }
-
         #error_page  404              /404.html;
 
         # redirect server error pages to the static page /50x.html
