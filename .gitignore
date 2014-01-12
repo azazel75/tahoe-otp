@@ -1,9 +1,7 @@
 *.autosave
 *.egg-info
-*.mo
 *.py[co]
 /*.log
-/.emacs.desktop.lock
 /.requirements.timestamp
 /bin/
 /buildout/cache/
@@ -14,6 +12,5 @@
 /eggs/
 /emacs.desktop
 /env/
-/src/pip-delete-this-directory.txt
 /var/
 /etc/
