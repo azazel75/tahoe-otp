@@ -1,0 +1,26 @@
+diff -r d8a79e727bc1 Nevow/setup.py
+--- a/Nevow/setup.py	Sat Jul 20 12:53:49 2013 -0700
++++ b/Nevow/setup.py	Sat Jul 20 13:01:26 2013 -0700
+@@ -1,13 +1,20 @@
+ #!/usr/bin/python
+ 
+-from nevow import __version__ as version
++import os
++import re
++
++# Parse the version without importing nevow or twisted:
++with file(os.path.join('nevow', '_version.py'), 'r') as f:
++    match = re.search(r'^version = versions.Version\(.*?, (\d+), (\d+), (\d+)\)$', f.read(), re.MULTILINE)
++    version = '%s.%s.%s' % (match.group(1), match.group(2), match.group(3))
++
++del f, match # Cleanup temporaries used to parse version.
+ 
+ try:
+     import setuptools
+ except ImportError:
+     setuptools = None
+ 
+-import os
+ data_files=[]
+ for (dirpath, dirnames, filenames) in os.walk("doc"):
+     if ".svn" in dirnames:
