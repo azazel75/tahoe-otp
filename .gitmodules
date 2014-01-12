@@ -1,0 +1,3 @@
+[submodule "src/metapensiero.flask.otpauth"]
+	path = src/metapensiero.flask.otpauth
+	url = git@github.com:azazel75/metapensiero.flask.otpauth.git
