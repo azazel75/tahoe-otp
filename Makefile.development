@@ -9,4 +9,4 @@
 # Launch the web server, after updating the installation and the database
 .PHONY: run
 run: buildout
-	@tmux new -n "uwsgi LinOTP" "bin/uwsgi --lazy --file etc/linotp.wsgi -s 127.0.0.1:5000" \; neww -n "otpauth WSGI" "bin/uwsgi --lazy --file etc/otpauth.wsgi -s 127.0.0.1:5001"
+	tmux new -n "uwsgi LinOTP" "bin/linotp-paster serve etc/linotp.ini" \; neww -n "otpauth WSGI" "bin/otpauth-paster serve etc/otpauth.ini" \; neww -n "nginx" "buildout/parts/nginx/sbin/nginx -p $(TOPDIR) -c etc/nginx.conf"
