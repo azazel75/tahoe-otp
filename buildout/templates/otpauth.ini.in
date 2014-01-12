@@ -1,0 +1,45 @@
+[app:main]
+use = egg:metapensiero.flask.otpauth
+DEBUG = true
+SECRET_KEY = secret key of the session cookie
+OTP_VALIDATOR_URL = http://${hosts:linotp}:${ports:linotp}/validate/check
+
+[server:main]
+use = egg:Paste#http
+host = ${hosts:otpauth}
+port = ${ports:otpauth}
+
+[loggers]
+keys = root, otpauth
+
+[logger_root]
+level = DEBUG
+handlers = file, stderr
+
+[logger_otpauth]
+level = DEBUG
+handlers = file, stderr
+qualname = otpauth
+
+[handlers]
+keys = file, stderr
+
+[handler_file]
+class = handlers.RotatingFileHandler
+# Make the logfiles 10 MB
+# and rotate 4  files
+args = ('${buildout:vardir}/log/otpauth.log','a', 10000000, 4)
+level = INFO
+formatter = generic
+
+[handler_stderr]
+class = handlers.StreamHandler
+level = NOTSET
+formatter = generic
+
+[formatters]
+keys = generic
+
+[formatter_generic]
+format = %(asctime)s %(levelname)-5.5s %(message)s
+datefmt = %Y/%m/%d - %H:%M:%S
