@@ -33,9 +33,10 @@ level = INFO
 formatter = generic
 
 [handler_stderr]
-class = handlers.StreamHandler
-level = NOTSET
+class = logging.StreamHandler
+level = INFO
 formatter = generic
+args = ()
 
 [formatters]
 keys = generic
